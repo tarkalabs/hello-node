@@ -4,6 +4,9 @@ const reddit = require("./lib/reddit");
 const REDDIT_FILE = "reddit_content.json";
 var app = express();
 
+app.set("views", "./views");
+app.set("view engine", "jade");
+
 app.get("/",(req, res) => {
   reddit.readReddit(REDDIT_FILE,(err,data) => {
     if(err) {
@@ -12,7 +15,7 @@ app.get("/",(req, res) => {
       return;
     }
     let content = JSON.parse(data);
-    res.json(content);
+    res.render("index");
   });
 });
 

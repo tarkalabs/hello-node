@@ -3,4 +3,9 @@ html
   head
     title Hello Jade
   body
-    h1 Hello from Express and Jade
+    h1 Reddit
+    p this page has been viewed #{viewCount} times
+    ul
+      each entry in entries
+        li= entry.title
+

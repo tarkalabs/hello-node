@@ -18,6 +18,8 @@
   "homepage": "https://github.com/tarkalabs/hello-node#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "jade": "^1.11.0"
+    "express-session": "^1.13.0",
+    "jade": "^1.11.0",
+    "lodash": "^4.2.0"
   }
 }

@@ -1,13 +1,27 @@
 "use strict"
 const express = require("express");
+const session = require("express-session");
+const map = require("lodash/map");
+const pick = require("lodash/pick");
 const reddit = require("./lib/reddit");
+
 const REDDIT_FILE = "reddit_content.json";
 var app = express();
 
 app.set("views", "./views");
 app.set("view engine", "jade");
+app.use(session({
+  secret: "this is secret",
+  resave: true,
+  saveUninitialized: true
+}));
 
 app.get("/",(req, res) => {
+  if(req.session.views) {
+    req.session.views++
+  } else {
+    req.session.views = 1;
+  }
   reddit.readReddit(REDDIT_FILE,(err,data) => {
     if(err) {
       res.status(500);
@@ -15,7 +29,9 @@ app.get("/",(req, res) => {
       return;
     }
     let content = JSON.parse(data);
-    res.render("index");
+    let entries = map(content.data.children, (child)=> pick(child.data, ["title","score","num_comments","url"]))
+    console.log(entries);
+    res.render("index", {entries: entries, viewCount: req.session.views});
   });
 });
 

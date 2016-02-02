@@ -1,15 +1,37 @@
 "use strict"
 const reddit = require('./lib/reddit');
 const http = require('http');
-
+const REDDIT_FILE = "reddit_content.json";
+const handleError = (res, err) => {
+  res.writeHead(500);
+  res.write(JSON.stringify(err));
+  res.end();
+}
 var server = http.createServer((req,res) => {
   if(req.url == "/" && req.method=="GET") {
-    res.write("hello world");
-    res.end(); 
-    return;
+    reddit.readReddit("reddit_content.json",(err,data) => {
+      if(err) {
+        handleError(res, err);
+        return;
+      }
+      res.writeHead(201, "refreshed", {"Content-Type": "application/json"});
+      res.write(data);
+      res.end();
+    });
   }
-  res.writeHead(404, "Not found");
-  res.end();
+  else if(req.url == "/refresh" && req.method=="POST") {
+    reddit.dumpReddit(REDDIT_FILE,(err) => {
+      if(err) {
+        handleError(res, err);
+        return;
+      }
+      res.write("Content refreshed");
+      res.end();
+    })
+  } else {
+    res.writeHead(404, "Not found");
+    res.end();
+  }
 });
 
 server.listen(1337);
@@ -26,9 +48,3 @@ server.listen(1337);
 //console.log('emitting event...');
 //models.emit('event', 1 ,2,3);
 
-reddit.dumpReddit("reddit_content.json",(err) => {
-  reddit.readReddit("reddit_content.json",(err,data) => {
-    if(err) { console.log(err); return; }
-    //console.log(data.toString());
-  });
-});

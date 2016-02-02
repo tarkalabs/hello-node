@@ -14,7 +14,7 @@ var server = http.createServer((req,res) => {
         handleError(res, err);
         return;
       }
-      res.writeHead(201, "refreshed", {"Content-Type": "application/json"});
+      res.writeHead(200,null,  {"Content-Type": "application/json"});
       res.write(data);
       res.end();
     });

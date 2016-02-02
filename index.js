@@ -1,5 +1,18 @@
 "use strict"
 const reddit = require('./lib/reddit');
+const http = require('http');
+
+var server = http.createServer((req,res) => {
+  if(req.url == "/" && req.method=="GET") {
+    res.write("hello world");
+    res.end(); 
+    return;
+  }
+  res.writeHead(404, "Not found");
+  res.end();
+});
+
+server.listen(1337);
 
 //var models = require('./lib/models');
 //models.hello();
@@ -15,6 +28,7 @@ const reddit = require('./lib/reddit');
 
 reddit.dumpReddit("reddit_content.json",(err) => {
   reddit.readReddit("reddit_content.json",(err,data) => {
-    console.log(data.toString());
+    if(err) { console.log(err); return; }
+    //console.log(data.toString());
   });
 });

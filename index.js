@@ -14,5 +14,7 @@ const reddit = require('./lib/reddit');
 //models.emit('event', 1 ,2,3);
 
 reddit.dumpReddit("reddit_content.json",(err) => {
-  console.log("done");
+  reddit.readReddit("reddit_content.json",(err,data) => {
+    console.log(data.toString());
+  });
 });

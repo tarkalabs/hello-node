@@ -5,6 +5,8 @@ html
   body
     h1 Reddit
     p Welcome #{currentUser}
+    form(action="/refresh" method="post")
+      input(type="submit" value="refresh")
     p this page has been viewed #{viewCount} times
     ul
       each entry in entries

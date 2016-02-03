@@ -3,10 +3,11 @@ import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
 import {map, pick} from "lodash";
-import reddit from "./lib/reddit";
+import RedditLib from "./lib/reddit";
 
 const REDDIT_FILE = "reddit_content.json";
-var app = express();
+let redditLib = new RedditLib(REDDIT_FILE);
+let app = express();
 
 app.set("views", "./views");
 app.set("view engine", "jade");
@@ -28,22 +29,13 @@ var auth = (req, res, next) => {
     }
   }
 }
-var sessionCounter = (req,_,next) => {
-  if(req.session.views) {
-    req.session.views++
-  } else {
-    req.session.views = 1;
-  }
-  next();
-}
-app.use(sessionCounter);
 app.use(auth);
 app.get("/logout", (req,res) => {
   delete req.session.currentUser;
   res.redirect("/");
 });
 app.get("/",(req, res) => {
-  reddit.readReddit(REDDIT_FILE,(err,data) => {
+  redditLib.readReddit((err,data) => {
     if(err) {
       res.status(500);
       res.json(err);
@@ -72,13 +64,13 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/refresh", (req,res) => {
-  reddit.dumpReddit(REDDIT_FILE,(err) => {
+  redditLib.dumpReddit((err) => {
     if(err) {
       res.status(500);
       res.json(err);
       return;
     }
-    res.json({message: "content refreshed"});
+    res.redirect("/");
   })
 })
 

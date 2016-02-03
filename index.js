@@ -2,11 +2,8 @@
 import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
-import {map, pick} from "lodash";
-import RedditLib from "./lib/reddit";
+import redditApp from "./lib/reddit_app";
 
-const REDDIT_FILE = "reddit_content.json";
-let redditLib = new RedditLib(REDDIT_FILE);
 let app = express();
 
 app.set("views", "./views");
@@ -34,22 +31,6 @@ app.get("/logout", (req,res) => {
   delete req.session.currentUser;
   res.redirect("/");
 });
-app.get("/",(req, res) => {
-  redditLib.readReddit((err,data) => {
-    if(err) {
-      res.status(500);
-      res.json(err);
-      return;
-    }
-    let content = JSON.parse(data);
-    let entries = map(content.data.children, (child)=> pick(child.data, ["title","score","num_comments","url"]))
-    console.log(entries);
-    res.render("index", {
-      currentUser: req.session.currentUser,
-      entries: entries,
-      viewCount: req.session.views});
-  });
-});
 
 app.get("/login", (_, res) => res.render("login") )
 app.post("/login", (req, res) => {
@@ -62,16 +43,5 @@ app.post("/login", (req, res) => {
     res.redirect("/");
   }
 });
-
-app.post("/refresh", (req,res) => {
-  redditLib.dumpReddit((err) => {
-    if(err) {
-      res.status(500);
-      res.json(err);
-      return;
-    }
-    res.redirect("/");
-  })
-})
-
+app.use(redditApp);
 app.listen(process.env.PORT || 3000);

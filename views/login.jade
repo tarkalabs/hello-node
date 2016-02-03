@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title Login - Hello Node
+  body
+    h1 Login
+    if error
+      p.error= error
+    form(method="post" action="/login")
+      p
+        label(for="login_id") login
+        input#login_id(name="login")
+      p
+        label(for="password") password
+        input#password(name="password" type="password")
+      p
+        input(type="submit" value="Login")
+

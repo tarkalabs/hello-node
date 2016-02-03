@@ -26,7 +26,7 @@ var auth = (req, res, next) => {
     }
   }
 }
-app.use(auth);
+//app.use(auth);
 app.get("/logout", (req,res) => {
   delete req.session.currentUser;
   res.redirect("/");

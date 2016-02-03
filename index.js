@@ -1,10 +1,9 @@
 "use strict"
-const express = require("express");
-const session = require("express-session");
-const bodyParser = require("body-parser");
-const map = require("lodash/map");
-const pick = require("lodash/pick");
-const reddit = require("./lib/reddit");
+import express from "express";
+import session from "express-session";
+import bodyParser from "body-parser";
+import {map, pick} from "lodash";
+import reddit from "./lib/reddit";
 
 const REDDIT_FILE = "reddit_content.json";
 var app = express();

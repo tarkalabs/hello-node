@@ -18,12 +18,32 @@ app.use(session({
 }));
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get("/",(req, res) => {
+var auth = (req, res, next) => {
+  if(req.session.currentUser) {
+    next();
+  } else {
+    if(req.url==="/login") {
+      next();
+    } else {
+      res.redirect("/login");
+    }
+  }
+}
+var sessionCounter = (req,_,next) => {
   if(req.session.views) {
     req.session.views++
   } else {
     req.session.views = 1;
   }
+  next();
+}
+app.use(sessionCounter);
+app.use(auth);
+app.get("/logout", (req,res) => {
+  delete req.session.currentUser;
+  res.redirect("/");
+});
+app.get("/",(req, res) => {
   reddit.readReddit(REDDIT_FILE,(err,data) => {
     if(err) {
       res.status(500);

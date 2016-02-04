@@ -21,6 +21,10 @@ module.exports = {
       {
         test: /\.(png|woff|eot|ttf|jpg|gif|svg|woff2)$/,
         loader: "file"
+      },
+      {
+        test: /\.html$/,
+        loader: "raw"
       }
     ]
   }

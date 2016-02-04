@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-3 post-list">
+    <h3 class="title">Posts</h3>
+    <div class="post" ng-repeat="post in posts.entries">
+      <p class="post-title selected"><a href="#/posts/{{post.id}}"/>{{post.title}}</a></p>
+    </div>
+  </div>
+  <ui-view>
+  <p>Click on a post to view its details</p>
+  </ui-view>
+</div>

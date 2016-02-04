@@ -1,0 +1,23 @@
+{
+    "env": {"browser": true, "node": true},
+    "ecmaFeatures": {
+        "blockBindings": true,
+        "forOf": true,
+        "jsx": true,
+        "modules": true,
+        "blockBindings": true,
+        "destructuring": true,
+        "arrowFunctions": true,
+        "templateStrings": true,
+        "classes": true
+    },
+    "plugins" : ["react"],
+    "rules": {
+        "semi": 2,
+        "new-cap": [2, {"capIsNewExceptions": ['Map', 'List', 'Set']}],
+        "no-underscore-dangle": 0,
+        "no-multi-spaces": 0,
+        "no-unused-vars": [2, {"vars": "all", "args": "after-used"}]
+    },
+    "globals": {"google": true, "describe": true, "before": true, "it": true}
+}

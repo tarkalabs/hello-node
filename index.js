@@ -13,6 +13,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 var auth = (req, res, next) => {

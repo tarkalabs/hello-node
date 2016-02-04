@@ -1,0 +1,15 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <title>Angular App</title>
+  </head>
+  <body>
+    <h1>Test file</h1>
+    <div ng-controller="MainController as main">
+      <p>Hello {{name}}</p>
+      <p>{{main.message}}</p>
+      <input type="text" ng-model="name"/>
+    </div>
+    <script src="/dist.js"></script>
+  </body>
+</html>

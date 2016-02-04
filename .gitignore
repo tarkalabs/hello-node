@@ -1,3 +1,4 @@
 node_modules
 reddit_content.json
 dist
+public/dist.js

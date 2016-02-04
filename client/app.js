@@ -2,22 +2,18 @@
 require("bootstrap/dist/css/bootstrap.css");
 import angular from "angular";
 import uiRouter from "angular-ui-router";
+import posts from "./posts";
+import MainController from "./main_controller.js";
 
-var app = angular.module("app",[uiRouter])
+var app = angular.module("app",[uiRouter, posts])
 
-class MainController {
-  constructor($scope) {
-    console.log("i am here");
-    $scope.name = "Vagmi";
-    this.message = "Welcom";
-  }
-}
 var config = ($urlRouterProvider,$stateProvider) => {
   $urlRouterProvider.otherwise('/');
   $stateProvider.state("home",{
     url: "/",
     template: require("./templates/main.html"),
     controller: MainController,
+    controllerAs: "main"
   });
 }
 config.$inject = ["$urlRouterProvider","$stateProvider"];

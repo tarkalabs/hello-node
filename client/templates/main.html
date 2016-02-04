@@ -1,1 +1,18 @@
-<h3>hello {{name}}<h3>
+<div class="container">
+<div class="row">
+  <div class="col-md-10">
+    <h1>Reddit</h1>
+  </div>
+  <div class="col-md-2 pull-right">
+    <a class="btn btn-primary" ng-click="main.refreshPosts()">Refresh</a>
+  </div>
+</div>
+<ui-view>
+<div class="row">
+  <div class="col-md-12">
+    <p>Let's view the <a href="#/posts" ng-click="main.gotoPosts()">posts</a></p>
+    <p>{{main.loadingMessage}}</p>
+  </div>
+</div>
+</ui-view>
+</div>
